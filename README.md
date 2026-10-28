@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# CineTag
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O CineTag é uma aplicação web feita com React para explorar vídeos, abrir um player e organizar vídeos favoritos. A navegação entre as telas é feita com React Router, e a lista de vídeos é carregada de uma API externa.
 
-## Available Scripts
+## Tecnologias e assuntos estudados
 
-In the project directory, you can run:
+O projeto foi desenvolvido durante um curso e reúne os seguintes assuntos:
 
-### `npm start`
+- **React**: criação da interface com componentes.
+- **React Router DOM**: navegação entre as páginas sem recarregar a aplicação.
+- **CSS Modules**: estilos isolados por componente e página.
+- **Context API**: compartilhamento do estado dos favoritos entre componentes.
+- **Hooks**: gerenciamento de estado e efeitos com hooks como `useState`, `useEffect` e `useContext`.
+- **HTML, CSS e JavaScript**: tecnologias fundamentais usadas na construção da aplicação.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Pré-requisitos
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Node.js](https://nodejs.org/) e npm instalados.
+- Acesso à internet para carregar os vídeos da API e as fontes externas.
 
-### `npm test`
+## Como executar o projeto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Abra um terminal na pasta do projeto.
+2. Instale as dependências:
 
-### `npm run build`
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Inicie o servidor de desenvolvimento:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Acesse [http://localhost:3000](http://localhost:3000) no navegador.
 
-### `npm run eject`
+O servidor de desenvolvimento atualiza a página automaticamente quando os arquivos são alterados. Para encerrá-lo, use `Ctrl + C` no terminal.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Como usar
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Home (`/`)**: exibe os vídeos recebidos pela API.
+2. **Abrir um vídeo**: selecione um card para acessar a rota do vídeo e visualizar o player.
+3. **Favoritos (`/favoritos`)**: reúne os vídeos marcados como favoritos durante a navegação.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Os favoritos são mantidos em memória pelo contexto React; não há persistência configurada, então a lista é reiniciada ao recarregar a página.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Scripts disponíveis
 
-## Learn More
+| Comando | Descrição |
+| --- | --- |
+| `npm start` | Inicia a aplicação em modo de desenvolvimento. |
+| `npm test` | Executa os testes configurados pelo Create React App. |
+| `npm run build` | Gera a versão de produção na pasta `build/`. |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Dados dos vídeos
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+A aplicação busca a lista de vídeos e os dados de cada vídeo na API:
 
-### Code Splitting
+`https://my-json-server.typicode.com/monicahillman/cinetag-api/videos`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Portanto, o carregamento dos vídeos depende de a API estar acessível. O projeto não configura um servidor de API local.
 
-### Analyzing the Bundle Size
+## Organização do projeto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```text
+public/                 Arquivos públicos e HTML inicial
+  imagens/              Banners e ícones usados pela aplicação
+src/
+  components/           Componentes reutilizáveis, como cabeçalho, cards e banners
+  contextos/             Contexto React para o estado dos favoritos
+  pages/                 Telas: início, favoritos, player e página não encontrada
+  json/                  Pasta destinada a arquivos JSON
+  routes.js              Configuração das rotas da aplicação
+  index.js               Ponto de entrada do React
+  index.css              Estilos globais
+```
 
-### Making a Progressive Web App
+### Fluxo da aplicação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. `src/index.js` monta a aplicação React no elemento `root` do HTML.
+2. `src/routes.js` configura as rotas e envolve as páginas com a estrutura base.
+3. `src/pages/PaginaBase` renderiza o cabeçalho, o conteúdo da rota e o rodapé; também disponibiliza o contexto de favoritos.
+4. A página inicial busca os vídeos na API e apresenta cada item como um card.
+5. A página do player usa o identificador da rota para solicitar os dados do vídeo correspondente.
